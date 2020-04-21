@@ -1,62 +1,66 @@
 PShape model;
 
-float acixf = PI/2;
-float aciyf = PI/2;
+float chx = PI/2;
+float chy = PI/2;
 
-float zoom = 550;
+float zoom = 700;
 
-float fx;
-float fy;
+float x;
+float y;
 
 void setup() {
-  size(1600, 900, P3D);
+  size(1280, 720, P3D);
   model = loadShape("museum.obj");
 }
 
 void draw() {
   background(0);
-  ambientLight(150, 150, 150);
 
+  ambientLight(100, 100, 100);
   lightFalloff(0.25, 0.001, 0.0);
+  
   pointLight(200, 200, 200, 
-    zoom * cos(acixf) * sin(aciyf), 
-    zoom * cos(aciyf), 
-    zoom * sin(acixf) * sin(aciyf));
+    zoom * cos(chx) * sin(chy), 
+    zoom * cos(chy), 
+    zoom * sin(chx) * sin(chy)
+    );
+  
+  //pointLight(15, 58, 250,0,0,0);
 
-  camera(zoom * cos(acixf) * sin(aciyf), 
-    zoom * cos(aciyf), 
-    zoom * sin(acixf) * sin(aciyf), 
+
+  camera(zoom * cos(chx) * sin(chy), 
+    zoom * cos(chy), 
+    zoom * sin(chx) * sin(chy), 
     0, 0, 0, 
     0, 1, 0);
-
+  
   fill(75);
-  box(900, 2, 900);
+  box(900, 1, 900);
 
-  fill(#FF3B3B);
-  box(2000, 3, 3);
-  box(3, 2000, 3);
-  box(3, 3, 2000);
+  //fill(#FF3B3B);
+  //box(2000, 2, 2);
+  //box(2, 2000, 2);
+  //box(2, 2, 2000);
 
   shape(model);
 
-  translate(500, 0, 300);
-  rotateX(PI);
+  //translate(500,500, 0);
 
 
   if (mousePressed == true) {
     float
-    dx = mouseX - fx;
-    float dy = mouseY - fy;
+      dx = mouseX - x;
+    float dy = mouseY - y;
 
-    acixf += (dx / width);
-    aciyf += (dy / height);
+    chx += (dx / width);
+    chy += (dy / height);
   }
 
-  fx = mouseX;
-  fy = mouseY;
+  x = mouseX;
+  y = mouseY;
 }
 
 void mouseWheel(MouseEvent event) {
   float e = event.getCount();
-  zoom += 10f * e;
+  zoom += 20 * e;
 }
